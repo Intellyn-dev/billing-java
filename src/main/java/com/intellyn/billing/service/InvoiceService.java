@@ -44,6 +44,9 @@ public class InvoiceService {
     }
 
     public BigDecimal calculateTax(Invoice invoice) {
+        if (invoice.getSubscription() == null) {
+            return BigDecimal.ZERO;
+        }
         PlanType plan = invoice.getSubscription().getPlanType();
         return plan == PlanType.ENTERPRISE
             ? invoice.getAmount().multiply(TAX_RATE)
